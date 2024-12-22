@@ -8,54 +8,62 @@ homepage = "https://github.com/gngpp/ninja"
 repository = "https://github.com/gngpp/ninja.git"
 readme = "README.md"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
+[workspace]
+members = [
+  "crates/boring-imp",
+  "crates/boring-sys-imp",
+  "crates/h2_imp",
+  "crates/hyper_imp",
+  "crates/hyper-boring-imp",
+  "crates/mitm",
+  "crates/openai",
+  "crates/reqwest-impersonate",
+  "crates/self_update",
+  "crates/tokio-boring-imp",
+]
+[workspace.dependencies]
 anyhow = "1.0.75"
+once_cell = "1"
 clap = { version = "4.4.3", features = ["derive", "env"] }
-serde = {version = "1.0.188", features = ["derive"] }
-openai = { path = "./crates/openai" }
-mitm = { path = "./crates/mitm", optional = true }
+serde = { version = "1.0.188", features = ["derive"] }
+openai = { path = "crates/openai" }
+mitm = { path = "crates/mitm", optional = true }
 cidr = "0.2.2"
 toml = "0.8.0"
 url = "2.4.1"
+futures="0.3"
 
-tokio = { version = "1.35.1", default-features = false, features = ["rt"], optional = true }
+tokio = { version = "1.35.1", default-features = false, features = [
+  "rt",
+], optional = true }
 serde_json = { version = "1.0.108", optional = true }
-inquire = { version = "0.6.2", optional =  true }
+inquire = { version = "0.6.2", optional = true }
 colored_json = { version = "4.0.0", optional = true }
 indicatif = { version = "0.17.7", optional = true }
 json_to_table = { version = "0.7.0", optional = true }
 tabled = { version = "0.12.2", optional = true }
-self_update = { path = "./crates/self_update", default-features = false, features = ["archive-tar", "compression-flate2"] }
-reqwest = { package = "reqwest-impersonate", version ="0.11.49", default-features = false, features = ["impersonate"] }
+self_update = { path = "crates/self_update", default-features = false, features = [
+  "archive-tar",
+  "compression-flate2",
+] }
+reqwest = { path = "crates/reqwest-impersonate", version = "0.11.49", default-features = false, features = [
+  "impersonate",
+] }
 
-# self update
-zip = { version = "0.6", default-features = false, features = ["time"], optional = true }
+zip = { version = "0.6", default-features = false, features = [
+  "time",
+], optional = true }
 tempfile = "3"
 semver = "1.0"
-
 # allocator
 tcmalloc = { version = "0.3.0", optional = true }
 snmalloc-rs = { version = "0.3.4", optional = true }
 rpmalloc = { version = "0.2.2", optional = true }
 jemallocator = { package = "tikv-jemallocator", version = "0.5.4", optional = true }
 mimalloc = { version = "0.1.39", default-features = false, optional = true }
-
-[target.'cfg(target_family = "unix")'.dependencies]
 daemonize = "0.5.0"
-nix = { version = "0.27.1", features = ["signal", "user", "ptrace"]}
-
-[target.'cfg(target_os = "linux")'.dependencies]
+nix = { version = "0.27.1", features = ["signal", "user", "ptrace"] }
 sysctl = "0.5.4"
-
-[dev-dependencies]
-futures-util = "0.3.28"
-serde_json = "1.0.107"
-tokio = { version = "1.35.1", default-features = false, features = ["rt"] }
-reqwest = { package = "reqwest-impersonate", version ="0.11.49", default-features = false, features = [
-    "boring-tls", "impersonate","json", "cookies", "stream", "multipart", "socks", "blocking"
-] }
 base64 = "0.21.4"
 viuer = "0.6.2"
 hex = "0.4.3"
@@ -64,24 +72,87 @@ env_logger = "0.10.0"
 csv = "1.3.0"
 scraper = "0.18.1"
 regex = "1.10.2"
-redis = { version = "0.23.3", features = ["tokio-comp", "tokio-rustls-comp"]}
-redis-macros = { version = "0.2.1"}
-openai = { path = "./crates/openai" }
+redis = { version = "0.23.3", features = ["tokio-comp", "tokio-rustls-comp"] }
+redis-macros = { version = "0.2.1" }
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+serde.workspace = true
+openai.workspace = true
+mitm.workspace = true
+cidr.workspace = true
+toml.workspace = true
+url.workspace = true
+tokio.workspace = true
+serde_json.workspace = true
+inquire.workspace = true
+colored_json.workspace = true
+indicatif.workspace = true
+json_to_table.workspace = true
+tabled.workspace = true
+self_update.workspace = true
+reqwest.workspace = true
+# self update
+zip.workspace = true
+tempfile.workspace = true
+semver.workspace = true
+# allocator
+tcmalloc.workspace = true
+snmalloc-rs.workspace = true
+rpmalloc.workspace = true
+jemallocator.workspace = true
+mimalloc.workspace = true
+
+[target.'cfg(target_family = "unix")'.dependencies]
+daemonize.workspace = true
+nix.workspace = true
+
+[target.'cfg(target_os = "linux")'.dependencies]
+sysctl.workspace = true
+
+[dev-dependencies]
+futures-util.workspace = true
+serde_json.workspace = true
+tokio = { workspace = true, features = ["rt"] }
+reqwest = { workspace = true, features = [
+  "boring-tls",
+  "impersonate",
+  "json",
+  "cookies",
+  "stream",
+  "multipart",
+  "socks",
+  "blocking",
+] }
+base64.workspace = true
+viuer.workspace = true
+hex.workspace = true
+sha2.workspace = true
+env_logger.workspace = true
+csv.workspace = true
+scraper.workspace = true
+regex.workspace = true
+redis.workspace = true
+redis-macros.workspace = true
+openai.workspace = true
 
 [features]
 default = ["serve", "mitm", "self_update"]
 self_update = ["dep:serde_json"]
 mitm = ["openai/preauth", "dep:mitm"]
 terminal = [
-    "openai/api",
-    "dep:tokio", 
-    "dep:serde_json", 
-    "dep:inquire", 
-    "dep:colored_json", 
-    "dep:indicatif",
-    "dep:json_to_table",
-    "dep:tabled"
-    ]
+  "openai/api",
+  "dep:tokio",
+  "dep:serde_json",
+  "dep:inquire",
+  "dep:colored_json",
+  "dep:indicatif",
+  "dep:json_to_table",
+  "dep:tabled",
+]
 serve = ["limit"]
 limit = ["openai/limit", "openai/serve"]
 # Enable jemalloc for binaries
@@ -119,6 +190,14 @@ depends = "$auto"
 section = "utility"
 priority = "optional"
 assets = [
-    ["target/release/ninja", "usr/bin/ninja", "755"],
-    ["README.md", "usr/share/doc/ninja/README", "644"],
+  [
+    "target/release/ninja",
+    "usr/bin/ninja",
+    "755",
+  ],
+  [
+    "README.md",
+    "usr/share/doc/ninja/README",
+    "644",
+  ],
 ]

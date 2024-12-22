@@ -14,8 +14,8 @@ edition = "2021"
 name = "tokio-boring-imp"
 version = "4.9.3"
 authors = [
-    "Alex Crichton <alex@alexcrichton.com>",
-    "Ivan Nikulin <ifaaan@gmail.com>",
+  "Alex Crichton <alex@alexcrichton.com>",
+  "Ivan Nikulin <ifaaan@gmail.com>",
 ]
 build = false
 autobins = false
@@ -32,14 +32,8 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/cloudflare/boring"
 
 [package.metadata.docs.rs]
-features = [
-    "rpk",
-    "pq-experimental",
-]
-rustdoc-args = [
-    "--cfg",
-    "docsrs",
-]
+features = ["rpk", "pq-experimental"]
+rustdoc-args = ["--cfg", "docsrs"]
 
 [lib]
 name = "tokio_boring_imp"
@@ -73,38 +67,19 @@ path = "tests/client_server.rs"
 name = "rpk"
 path = "tests/rpk.rs"
 
-[dependencies.boring]
-version = "4.9.3"
-package = "boring-imp"
-
-[dependencies.boring-sys]
-version = "4.9.3"
-package = "boring-sys-imp"
-
-[dependencies.once_cell]
-version = "1.0"
-
-[dependencies.tokio]
-version = "1"
-
-[dev-dependencies.anyhow]
-version = "1"
-
-[dev-dependencies.futures]
-version = "0.3"
-
-[dev-dependencies.tokio]
-version = "1"
-features = ["full"]
+[dependencies]
+boring.workspace = true
+boring-sys.workspace = true
+once_cell.workspace = true
+tokio = { workspace = true, features = ["full"] }
+anyhow.workspace = true
+futures.workspace = true
 
 [features]
-fips = [
-    "boring/fips",
-    "boring-sys/fips",
-]
+fips = ["boring/fips", "boring-sys/fips"]
 fips-link-precompiled = [
-    "boring/fips-link-precompiled",
-    "boring-sys/fips-link-precompiled",
+  "boring/fips-link-precompiled",
+  "boring-sys/fips-link-precompiled",
 ]
 pq-experimental = ["boring/pq-experimental"]
 rpk = ["boring/rpk"]
