@@ -38,3 +38,4 @@ patch/.patch
 bx/
 images/
 serve.toml
+.history
